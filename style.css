@@ -1,0 +1,43 @@
+:root {
+ box-sizing: border-box;
+ font-family: Avenir, sans-serif;
+ color: rgb(100, 100, 100);
+ line-height: 0.5;
+}
+
+body {
+ max-width: 800px;
+ margin: 0 auto;
+}
+
+.title,
+.scoreTitle,
+.timeTitle {
+ text-align: center;
+}
+
+.scoreTitle {
+ font-size: 2em;
+}
+
+.square {
+ height: 200px;
+ width: 200px;
+ margin: 2px 2px;
+ background-color: rgb(200, 200, 200);
+}
+
+.mole {
+ background-image: url("images/mole.png");
+ background-size: cover;
+}
+
+.grid {
+ display: flex;
+ flex-flow: row wrap;
+ justify-content: center;
+ align-content: center;
+ margin: 0 auto;
+ width: 618px;
+ height: 618px
+}
