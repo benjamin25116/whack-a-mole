@@ -12,7 +12,24 @@
  <h1 class="title">Whack-A-Mole!</h1>
  <h2 class="scoreTitle">Score: <span class="score">0</span></h2>
  <h2 class="timeTitle">Time left: <span class="time">10</span> seconds</h2>
- <div class="startScreen"><button class="startButton">Start Game</button></div>
+
+ <hr>
+
+ <div class="startScreen">
+  <br />
+  <label class="playerNameLabel" for="playerName">Player name:</label><br />
+  <input type="text" id="playerName">
+  <button class="startButton">Start Game</button>
+  <div>
+
+   <hr>
+
+   <h2 class="leaderboardTitle">Leaderboard</h2>
+   <ol class="leaderboardList"></ol>
+  </div>
+ </div>
+
+
  <div class="grid">
   <div class="row-1">
    <div class="square" id="1"></div>
