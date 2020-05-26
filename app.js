@@ -1,18 +1,16 @@
-/* TODO:
-
-1. set up grid to display mole randomly
-2. set up interval to have grid update mole position in a given time
-3. Add event listener to square to detect "mouseup" event and add score
-4. set up countdown to stop the game when the countdown is over
-
-*/
-
+// Variable declarations and initialisations
 const squares = document.querySelectorAll(".square");
 const mole = document.getElementsByClassName("mole");
 const timeLeft = document.querySelector(".time");
+const startBtn = document.querySelector(".startButton");
+const startScrn = document.querySelector(".startScreen");
+const gameGrid = document.querySelector(".grid");
+const scoreTitle = document.querySelector(".score");
 let score = 0;
 let currentTime = timeLeft.textContent;
+let timer = false;
 
+// Function declarations
 function randomiseMole() {
   squares.forEach((square) => square.classList.remove("mole"));
   squares[Math.floor(Math.random() * 9)].classList.add("mole");
@@ -24,21 +22,45 @@ function countdown() {
     timeLeft.textContent = currentTime;
     randomiseMole();
   } else {
-    clearInterval(timer);
     alert("Time's up! Your score is " + score);
+    resetGame();
   }
 }
-
-let timer = setInterval(countdown, 1000);
 
 function addScore() {
   let moleID = mole[0].getAttribute("id");
   let clickedSquareId = this.getAttribute("id");
   if (clickedSquareId === moleID) {
     score++;
-    [previousScore] = document.getElementsByClassName("score");
+    previousScore = scoreTitle;
     previousScore.textContent = score.toString();
   }
 }
 
+function startGame() {
+  if (!timer) {
+    timeLeft.textContent = "10";
+    currentTime = 10;
+    timer = setInterval(countdown, 1000);
+    startBtn.style.display = "none";
+    startScrn.style.display = "none";
+    gameGrid.style.display = "block";
+  }
+}
+
+function resetGame() {
+  scoreTitle.textContent = "0";
+  timeLeft.textContent = "10";
+  clearInterval(timer);
+  timer = false;
+  startBtn.style.display = "block";
+  startScrn.style.display = "Block";
+  gameGrid.style.display = "none";
+}
+
+// Setting up Start Screen
+gameGrid.style.display = "none";
+
+// Add event listeners
 squares.forEach((square) => square.addEventListener("mouseup", addScore));
+startBtn.addEventListener("mouseup", startGame);
