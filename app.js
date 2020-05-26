@@ -1,6 +1,5 @@
 // Variable declarations and initialisations
 const squares = document.querySelectorAll(".square");
-const mole = document.getElementsByClassName("mole");
 const timeLeft = document.querySelector(".time");
 const startBtn = document.querySelector(".startButton");
 const startScrn = document.querySelector(".startScreen");
@@ -26,24 +25,26 @@ function randomiseMole() {
   squares[Math.floor(Math.random() * 9)].classList.add("mole");
 }
 
-function countdown() {
+function gameLoop() {
   if (currentTime != 0) {
     currentTime--;
     timeLeft.textContent = currentTime;
     randomiseMole();
   } else {
     alert(`Time's up! ${currentPlayerName}'s score is ` + score);
+    updateLeaderboard();
+    renderLeaderboard();
     resetGame();
   }
 }
 
 function addScore() {
-  let moleID = mole[0].getAttribute("id");
+  const mole = document.querySelector(".mole");
+  let moleID = mole.getAttribute("id");
   let clickedSquareId = this.getAttribute("id");
   if (clickedSquareId === moleID) {
     score++;
-    previousScore = scoreTitle;
-    previousScore.textContent = score.toString();
+    scoreTitle.textContent = score.toString();
   }
 }
 
@@ -51,7 +52,7 @@ function startGame() {
   if (!timer && currentPlayerName != null) {
     timeLeft.textContent = "10";
     currentTime = 10;
-    timer = setInterval(countdown, 1000);
+    timer = setInterval(gameLoop, 1000);
     startBtn.style.display = "none";
     startScrn.style.display = "none";
     gameGrid.style.display = "block";
@@ -70,10 +71,9 @@ function updateLeaderboard() {
     leaderboardArray.sort((playerA, playerB) => {
       return (playerA.score - playerB.score) * -1;
     });
+    // Return only top 5 scores
+    leaderboardArray = leaderboardArray.slice(0, 5);
   }
-
-  // Return only top 5 scores
-  leaderboardArray = leaderboardArray.slice(0, 5);
 }
 
 function renderLeaderboard() {
@@ -102,18 +102,24 @@ function resetGame() {
   clearInterval(timer);
   timer = false;
   startBtn.style.display = "block";
-  startScrn.style.display = "Block";
+  startScrn.style.display = "flex";
   gameGrid.style.display = "none";
-  playerNameInput.style.display = "inline";
+  playerNameInput.style.display = "block";
   playerNameInput.value = "";
   currentPlayerName = null;
-  playerNameLabel.style.display = "inline";
-  updateLeaderboard();
-  renderLeaderboard();
+  playerNameLabel.style.display = "block";
+  squares.forEach((square) => square.classList.remove("mole"));
+  localStorage.setItem("whack-a-mole", JSON.stringify(leaderboardArray));
 }
 
 // Setting up Start Screen
 gameGrid.style.display = "none";
+
+// Getting localstorage data
+if (localStorage.getItem("whack-a-mole")) {
+  leaderboardArray = JSON.parse(localStorage.getItem("whack-a-mole"));
+  renderLeaderboard();
+}
 
 // Add event listeners
 squares.forEach((square) => square.addEventListener("mouseup", addScore));

@@ -72,6 +72,9 @@ body {
 .startScreen {
  width: 100vw;
  height: 100vw;
+ display: flex;
+ align-items: center;
+ flex-direction: column;
 }
 
 .startButton,
@@ -83,13 +86,14 @@ body {
  background: white;
  font-weight: bold;
  font-size: medium;
- margin: 10px calc((100vw / 2) - 75px) 0px;
+ text-align: center;
+ margin: 5px 0px;
 }
 
 .playerNameLabel {
  font-weight: bold;
  font-size: large;
- margin: calc((100vw / 2) - 55.5px);
+ margin: 5px 0px;
 }
 
 .leaderboardTitle {
@@ -102,7 +106,8 @@ body {
  width: 100%;
  padding: 0;
  /* background: green; */
- display: none; /* Will be changed to flex in JS */
+ display: none;
+ /* Will be changed to flex in JS */
  flex-direction: column;
  align-items: center;
 }
