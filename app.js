@@ -125,3 +125,25 @@ if (localStorage.getItem("whack-a-mole")) {
 squares.forEach((square) => square.addEventListener("mouseup", addScore));
 startBtn.addEventListener("mouseup", startGame);
 playerNameInput.addEventListener("input", updateName);
+
+// working with firebase
+var firebaseConfig = {
+  
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+let firestore = firebase.firestore();
+// db.collection("scores").add({
+//     name: "Huey",
+//     score: 32,
+//   })
+
+firestore.collection("scores").get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data().name}`);
+  });
+});
+  
+  
